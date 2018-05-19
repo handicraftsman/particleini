@@ -12,14 +12,14 @@ particleini::config::config(std::string& config_path) {
   std::string line;
 
   std::string sname = "general";
-  std::unordered_map<std::string, std::string> section;
+  particleini::config::dsec section;
 
   while (std::getline(f, line)) {
     auto m = std::smatch {};
     if ((m = std::smatch {}, std::regex_match(line, m, regex_section))) {
       data[sname] = section;
       sname = m[1];
-      section = std::unordered_map<std::string, std::string>();
+      section = particleini::config::dsec();
     } else if ((m = std::smatch {}, std::regex_match(line, m, regex_pair))) {
       std::string l = m[2];
       if (l[0] == '"' && l[l.size() - 1] == '"') {
@@ -29,7 +29,7 @@ particleini::config::config(std::string& config_path) {
       } else if ((l[0] == '\'' || l[l.size() - 1] == '\'' || l[0] == '"' || l[l.size() - 1] == '"') && l[0] != l[l.size() - 1]) {
         throw std::runtime_error("Invalid value");
       }
-      section.insert(std::make_pair(m[1], l));
+      section.push_back(std::make_pair(m[1], l));
     }
   }
   data[sname] = section;
