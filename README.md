@@ -8,6 +8,7 @@ $ cd particleini
 $ mkdir build && cd build
 $ meson ..
 $ ninja
+$ meson configure . -Dprefix=/usr/
 $ sudo ninja install
 ```
 
