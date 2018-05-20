@@ -5,6 +5,7 @@
 #include <regex>
 
 particleini::config::config(std::string& config_path) {
+  static std::regex regex_comment("^#.*$");
   static std::regex regex_section("^\\[(.+)\\]$");
   static std::regex regex_pair("^(.+?) ?= ?(.+)$");
 
@@ -25,7 +26,8 @@ particleini::config::config(std::string& config_path) {
   try {
     while (std::getline(f, line)) {
       auto m = std::smatch {};
-      if ((m = std::smatch {}, std::regex_match(line, m, regex_section))) {
+      if (std::regex_match(line, m, regex_comment)) {  
+      } if ((m = std::smatch {}, std::regex_match(line, m, regex_section))) {
         data[sname] = section;
         sname = m[1];
         section = particleini::config::dsec();

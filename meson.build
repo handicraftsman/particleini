@@ -23,7 +23,7 @@ executable(
 pkg = import('pkgconfig')
 pkg.generate(
   libraries: '-lparticleini',
-  version: '0.1.2',
+  version: '0.1.3',
   name: 'particleini',
   filebase: 'particleini',
   description: 'A simple INI parser for C++'
